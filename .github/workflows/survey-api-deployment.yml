@@ -1,0 +1,31 @@
+name: Deploy to Kubernetes cluster
+
+on:
+  push:
+    paths:
+      - survey-api/**
+    branches:
+      - "main"
+
+jobs:
+  build-and-push-docker-image:
+    name: Build and push Docker image
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./survey-api
+    env:
+      DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-api:${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Docker login
+        run: docker login registry.digitalocean.com -u ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }} -p ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }}
+
+      - name: Build Docker image
+        run: docker image build -t ${{ env.DOCKER_IMAGE_NAME }} .
+
+      - name: Push Docker image
+        run: docker image push ${{ env.DOCKER_IMAGE_NAME }}
