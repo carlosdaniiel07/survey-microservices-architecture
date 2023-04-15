@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Survey.Microservices.Architecture.Application\Survey.Microservices.Architecture.Application.csproj" />
+    <ProjectReference Include="..\Survey.Microservices.Architecture.Domain\Survey.Microservices.Architecture.Domain.csproj" />
+    <ProjectReference Include="..\Survey.Microservices.Architecture.Infrastructure.Data\Survey.Microservices.Architecture.Infrastructure.Data.csproj" />
+    <ProjectReference Include="..\Survey.Microservices.Architecture.Infrastructure.Service\Survey.Microservices.Architecture.Infrastructure.Service.csproj" />
+  </ItemGroup>
+
+</Project>
