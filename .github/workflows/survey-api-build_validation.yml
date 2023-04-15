@@ -5,7 +5,10 @@ on:
     paths:
       - survey-api/**
     branches:
-      - develop
+      - 'develop'
+      - '!main'
+  pull_request:
+  workflow_call:
 
 jobs:
   build-and-test:
@@ -32,6 +35,3 @@ jobs:
 
     - name: Test
       run: dotnet test --no-restore --verbosity minimal
-
-    - name: dotnet publish
-      run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/dist
