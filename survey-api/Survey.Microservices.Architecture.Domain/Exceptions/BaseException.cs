@@ -1,4 +1,4 @@
-﻿namespace  Survey.Microservices.Architecture.Domain.Exceptions
+﻿namespace Survey.Microservices.Architecture.Domain.Exceptions
 {
     public abstract class BaseException : Exception
     {

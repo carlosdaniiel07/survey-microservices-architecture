@@ -1,6 +1,6 @@
 ﻿using Survey.Microservices.Architecture.Domain.Models.v1;
 
-namespace  Survey.Microservices.Architecture.Domain.Interfaces.Services.v1
+namespace Survey.Microservices.Architecture.Domain.Interfaces.Services.v1
 {
     public interface INotificationContextService
     {

@@ -2,10 +2,10 @@
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Moq;
-using Survey.Microservices.Architecture.Application.UseCases.v1.Auth.SignUp;
+using Survey.Microservices.Architecture.Application.UseCases.v1.Survey.CreateSurvey;
 using Survey.Microservices.Architecture.Domain.Interfaces.Services.v1;
 
-namespace  Survey.Microservices.Architecture.Tests.UseCases
+namespace Survey.Microservices.Architecture.Tests.UseCases
 {
     public abstract class BaseUseCaseTest<TUseCase>
     {
@@ -25,7 +25,7 @@ namespace  Survey.Microservices.Architecture.Tests.UseCases
         private IMapper CreateMapper()
         {
             var mapperConfigurationExpression = new MapperConfigurationExpression();
-            mapperConfigurationExpression.AddMaps(typeof(SignUpProfile).Assembly);
+            mapperConfigurationExpression.AddMaps(typeof(CreateSurveyProfile).Assembly);
 
             return new MapperConfiguration(mapperConfigurationExpression).CreateMapper();
         }

@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Survey.Microservices.Architecture.Api.Filters;
-using Survey.Microservices.Architecture.Domain.Models.v1;
 using Survey.Microservices.Architecture.Infrastructure.IoC;
 
-namespace  Survey.Microservices.Architecture.Api.Infraestructure
+namespace Survey.Microservices.Architecture.Api.Infraestructure
 {
     public static class DependencyInjectionExtension
     {
@@ -16,7 +12,6 @@ namespace  Survey.Microservices.Architecture.Api.Infraestructure
 
             AddControllers(builder.Services);
             AddSwagger(builder.Services);
-            AddAuthenticationJwt(builder.Services, builder.Configuration);
         }
 
         private static void AddControllers(IServiceCollection services)
@@ -40,32 +35,6 @@ namespace  Survey.Microservices.Architecture.Api.Infraestructure
                 });
 
                 config.DocInclusionPredicate((name, api) => true);
-            });
-        }
-
-        private static void AddAuthenticationJwt(IServiceCollection services, IConfiguration configuration)
-        {
-            var settings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
-
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = true;
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(settings.Secret)),
-                    ValidateLifetime = true,
-                    ValidateIssuer = true,
-                    ValidIssuer = settings.Issuer,
-                    ValidateAudience = true,
-                    ValidAudience = settings.Audience,
-                };
             });
         }
     }

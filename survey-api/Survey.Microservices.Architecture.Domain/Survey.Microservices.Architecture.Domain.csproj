@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Enums\v1\" />
-    <Folder Include="Exceptions\v1\" />
   </ItemGroup>
 
 </Project>

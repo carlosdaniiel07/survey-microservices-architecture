@@ -1,6 +1,6 @@
 ﻿using Survey.Microservices.Architecture.Domain.Entities.v1;
 
-namespace  Survey.Microservices.Architecture.Domain.Interfaces.Repositories
+namespace Survey.Microservices.Architecture.Domain.Interfaces.Repositories
 {
     public interface IBaseRepository<TEntity> where TEntity : BaseEntity
     {

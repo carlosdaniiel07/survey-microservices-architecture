@@ -1,4 +1,4 @@
-﻿namespace  Survey.Microservices.Architecture.Domain.UseCases
+﻿namespace Survey.Microservices.Architecture.Domain.UseCases
 {
     public interface IBaseUseCase<TRequest, TResponse>
     {

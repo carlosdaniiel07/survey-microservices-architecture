@@ -1,7 +1,7 @@
 ﻿using Survey.Microservices.Architecture.Domain.Interfaces.Services.v1;
 using Survey.Microservices.Architecture.Domain.Models.v1;
 
-namespace  Survey.Microservices.Architecture.Application.Services.v1
+namespace Survey.Microservices.Architecture.Application.Services.v1
 {
     public class NotificationContextService : INotificationContextService
     {

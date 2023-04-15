@@ -1,4 +1,4 @@
-﻿namespace  Survey.Microservices.Architecture.Domain.Models.v1
+﻿namespace Survey.Microservices.Architecture.Domain.Models.v1
 {
     public class Notification
     {
@@ -7,7 +7,7 @@
 
         public Notification(string code) : this(code, null)
         {
-            
+
         }
 
         public Notification(string code, string message)

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using System.Net;
 using Survey.Microservices.Architecture.Domain.Interfaces.Services.v1;
+using System.Net;
 
-namespace  Survey.Microservices.Architecture.Api.Filters
+namespace Survey.Microservices.Architecture.Api.Filters
 {
     public class NotificationFilter : IAsyncResultFilter
     {

@@ -1,4 +1,4 @@
-﻿namespace  Survey.Microservices.Architecture.Domain.Entities.v1
+﻿namespace Survey.Microservices.Architecture.Domain.Entities.v1
 {
     public abstract class BaseEntity
     {

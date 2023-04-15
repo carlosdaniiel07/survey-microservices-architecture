@@ -1,8 +1,8 @@
-﻿using System.Net;
+﻿using Survey.Microservices.Architecture.Domain.Exceptions;
+using System.Net;
 using System.Text.Json;
-using Survey.Microservices.Architecture.Domain.Exceptions;
 
-namespace  Survey.Microservices.Architecture.Api.Middlewares
+namespace Survey.Microservices.Architecture.Api.Middlewares
 {
     public class GlobalErrorHandlerMiddleware
     {
@@ -24,7 +24,7 @@ namespace  Survey.Microservices.Architecture.Api.Middlewares
             catch (Exception ex)
             {
                 var response = context.Response;
-                
+
                 response.ContentType = "application/json";
                 response.StatusCode = ex is BaseException ? (ex as BaseException).StatusCode : (int)HttpStatusCode.InternalServerError;
 
