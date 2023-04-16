@@ -32,6 +32,8 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.AddSu
         {
             try
             {
+                _logger.LogInformation($"Adding a new answer to survey {request.SurveyId}");
+
                 var survey = await GetSurveyByIdAsync(request.SurveyId);
                 var isValidAnswer = survey.AvailableAnswers.Contains(request.Value);
 
