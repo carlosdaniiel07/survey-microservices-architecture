@@ -52,3 +52,11 @@ jobs:
       
       - name: Print K8s manifest
         run: cat ./k8s/deployment.yml
+        
+      - uses: tale/kubectl-action@v1
+        name: Setup Kubernetes cluster config
+        with:
+          base64-kube-config: ${{ secrets.DIGITAL_OCEAN_KUBE_CONFIG }}
+      
+      - name: Apply deployment on Kubernetes cluster
+        run: kubectl apply -f ./survey-api/k8s
