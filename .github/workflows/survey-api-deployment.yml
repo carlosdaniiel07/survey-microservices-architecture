@@ -59,4 +59,4 @@ jobs:
           base64-kube-config: ${{ secrets.DIGITAL_OCEAN_KUBE_CONFIG }}
       
       - name: Apply deployment on Kubernetes cluster
-        run: kubectl apply -f ./survey-api/k8s
+        run: kubectl apply -f ./k8s
