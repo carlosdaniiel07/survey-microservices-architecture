@@ -40,8 +40,3 @@ spec:
               memory: 500Mi
           imagePullPolicy: Always
       restartPolicy: Always
-    strategy:
-      type: RollingUpdate
-      rollingUpdate:
-        maxUnavailable: 25%
-        maxSurge: 25%
