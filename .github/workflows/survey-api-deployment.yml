@@ -46,7 +46,7 @@ jobs:
       - uses: falnyr/replace-env-vars-action@master
         name: Replace variables in K8s manifest
         env:
-          DOCKER_IMAGE: ${{ env.DOCKER_IMAGE_NAME }}
+          dockerImage: ${{ env.DOCKER_IMAGE_NAME }}
         with:
           filename: ./survey-api/k8s/deployment.yml
       
