@@ -43,12 +43,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: microsoft/variable-substitution@v1 
+      - uses: falnyr/replace-env-vars-action@master
         name: Replace variables in K8s manifest
-        with:
-          files: ./survey-api/k8s/deployment.yml
         env:
-          __dockerImage__: ${{ env.DOCKER_IMAGE_NAME }}
+          DOCKER_IMAGE: ${{ env.DOCKER_IMAGE_NAME }}
+        with:
+          filename: ./survey-api/k8s/deployment.yml
       
       - name: Print K8s manifest
         run: cat ./k8s/deployment.yml

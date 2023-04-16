@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: survey-api-pod
-          image: __dockerImage__
+          image: __DOCKER_IMAGE__
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: "Docker"
