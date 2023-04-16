@@ -31,6 +31,7 @@ jobs:
         run: docker image push ${{ env.DOCKER_IMAGE_NAME }}
   deploy-to-kubernetes:
     name: Deploy to Kubernetes cluster
+    needs: build-and-push-docker-image
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -45,7 +46,7 @@ jobs:
       - uses: microsoft/variable-substitution@v1 
         name: Replace variables in K8s manifest
         with:
-          files: './k8s/app.yml'
+          files: ./survey-api/k8s/app.yml
         env:
           __dockerImage__: ${{ env.DOCKER_IMAGE_NAME }}
       
