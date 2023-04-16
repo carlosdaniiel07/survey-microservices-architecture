@@ -19,7 +19,7 @@ jobs:
       DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-api:${{ github.sha }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Docker login
         run: docker login registry.digitalocean.com -u ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }} -p ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }}
@@ -29,3 +29,25 @@ jobs:
 
       - name: Push Docker image
         run: docker image push ${{ env.DOCKER_IMAGE_NAME }}
+  deploy-to-kubernetes:
+    name: Deploy to Kubernetes cluster
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./survey-api
+    env:
+      DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-api:${{ github.sha }}
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: microsoft/variable-substitution@v1 
+        name: Replace variables in K8s manifest
+        with:
+          files: './k8s/app.yml'
+        env:
+          __dockerImage__: ${{ env.DOCKER_IMAGE_NAME }}
+      
+      - name: Print K8s manifest
+        run: cat ./k8s/app.yml
