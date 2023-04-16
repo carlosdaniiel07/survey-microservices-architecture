@@ -23,6 +23,10 @@ spec:
               value: "Docker"
             - name: ASPNETCORE_URLS
               value: "http://+:80"
+            - name: connectionStrings.MongoDb
+              value: ""
+            - name: connectionStrings.Redis
+              value: ""
           ports:
             - name: http
               containerPort: 80
