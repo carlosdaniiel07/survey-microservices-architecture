@@ -14,12 +14,13 @@ namespace Survey.Microservices.Architecture.Infrastructure.Data.MongoDb.Reposito
         protected BaseRepository(IConfiguration configuration, IMapping<TEntity> mapping, string collectionName)
         {
             var connectionString = configuration.GetConnectionString("MongoDb");
+            var databaseName = connectionString.Split('/').LastOrDefault();
 
             BsonClassMap.TryRegisterClassMap(new BaseEntityMapping().GetClassMap());
             mapping.RegisterMap();
 
             var mongoClient = new MongoClient(connectionString);
-            var mongoDatabase = mongoClient.GetDatabase("SurveyMicroservicesArchitecture");
+            var mongoDatabase = mongoClient.GetDatabase(databaseName);
 
             _collection = mongoDatabase.GetCollection<TEntity>(collectionName);
         }
