@@ -47,8 +47,8 @@ jobs:
         name: Replace variables in K8s manifest
         env:
           dockerImage: ${{ env.DOCKER_IMAGE_NAME }}
-          ConnectionStrings_MongoDb: ${{ secrets.MONGODB_CONNECTION_STRING }}
-          ConnectionStrings_Redis: redis-svc:6379
+          mongoDbConnectionString: ${{ secrets.MONGODB_CONNECTION_STRING }}
+          redisConnectionString: redis-svc:6379
         with:
           filename: ./survey-api/k8s/deployment.yml
         
