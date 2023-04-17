@@ -73,7 +73,10 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.AddSu
             var surveyFromCache = await _cacheService.RetrieveAsync<SurveyEntity>(cacheKey);
 
             if (surveyFromCache != null)
+            {
+                _logger.LogInformation($"Survey {surveyId} retrieved from cache");
                 return surveyFromCache;
+            }
 
             var survey = await _surveyRepository.GetByIdAsync(surveyId);
 
@@ -84,6 +87,8 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.AddSu
                 throw new SurveyNotActiveException();
 
             await _cacheService.AddAsync(cacheKey, survey, TimeSpan.FromMinutes(3));
+
+            _logger.LogInformation($"Survey {surveyId} added to cache");
 
             return survey;
         }
