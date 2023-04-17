@@ -2,6 +2,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: survey-api-hpa
+  namespace: survey-microservices-architecture
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
