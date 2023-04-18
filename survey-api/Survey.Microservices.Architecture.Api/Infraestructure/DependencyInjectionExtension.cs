@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Survey.Microservices.Architecture.Api.Filters;
-using Survey.Microservices.Architecture.Api.GraphQL.v1.Mutation;
+using Survey.Microservices.Architecture.Api.GraphQL.v1.Mutations;
 using Survey.Microservices.Architecture.Api.GraphQL.v1.Queries;
 using Survey.Microservices.Architecture.Infrastructure.IoC;
 

@@ -1,7 +1,7 @@
 ﻿using Survey.Microservices.Architecture.Domain.Interfaces.Services.v1;
 using Survey.Microservices.Architecture.Domain.UseCases.v1.Survey.AddSurveyAnswer;
 
-namespace Survey.Microservices.Architecture.Api.GraphQL.v1.Mutation
+namespace Survey.Microservices.Architecture.Api.GraphQL.v1.Mutations
 {
     public class SurveyMutation : BaseMutation
     {
