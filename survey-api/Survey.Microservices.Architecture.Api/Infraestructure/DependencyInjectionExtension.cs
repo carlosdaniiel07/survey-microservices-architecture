@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Survey.Microservices.Architecture.Api.Filters;
+using Survey.Microservices.Architecture.Api.GraphQL.v1.Mutation;
+using Survey.Microservices.Architecture.Api.GraphQL.v1.Queries;
 using Survey.Microservices.Architecture.Infrastructure.IoC;
 
 namespace Survey.Microservices.Architecture.Api.Infraestructure
@@ -10,8 +12,16 @@ namespace Survey.Microservices.Architecture.Api.Infraestructure
         {
             builder.Services.ConfigureBaseServices(builder.Configuration);
 
+            AddGraphQLQueries(builder.Services);
             AddControllers(builder.Services);
             AddSwagger(builder.Services);
+        }
+
+        private static void AddGraphQLQueries(IServiceCollection services)
+        {
+            services.AddGraphQLServer()
+                .AddQueryType<SurveyQuery>()
+                .AddMutationType<SurveyMutation>();
         }
 
         private static void AddControllers(IServiceCollection services)

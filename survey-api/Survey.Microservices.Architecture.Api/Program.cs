@@ -26,6 +26,7 @@ app.UseMiddleware<GlobalErrorHandlerMiddleware>();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
+    endpoints.MapGraphQL();
 });
 
 app.Run();
