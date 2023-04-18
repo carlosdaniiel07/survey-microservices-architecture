@@ -12,12 +12,12 @@ namespace Survey.Microservices.Architecture.Api.Infraestructure
         {
             builder.Services.ConfigureBaseServices(builder.Configuration);
 
-            AddGraphQLQueries(builder.Services);
+            AddGraphQL(builder.Services);
             AddControllers(builder.Services);
             AddSwagger(builder.Services);
         }
 
-        private static void AddGraphQLQueries(IServiceCollection services)
+        private static void AddGraphQL(IServiceCollection services)
         {
             services.AddGraphQLServer()
                 .AddQueryType<SurveyQuery>()
