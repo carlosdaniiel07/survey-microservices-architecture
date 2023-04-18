@@ -3,10 +3,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Survey.Microservices.Architecture.Application.Services.v1;
 using Survey.Microservices.Architecture.Application.UseCases.v1.Survey.AddSurveyAnswer;
 using Survey.Microservices.Architecture.Application.UseCases.v1.Survey.CreateSurvey;
+using Survey.Microservices.Architecture.Application.UseCases.v1.Survey.GetSurveyResults;
 using Survey.Microservices.Architecture.Domain.Interfaces.Repositories.v1;
 using Survey.Microservices.Architecture.Domain.Interfaces.Services.v1;
 using Survey.Microservices.Architecture.Domain.UseCases.v1.Survey.AddSurveyAnswer;
 using Survey.Microservices.Architecture.Domain.UseCases.v1.Survey.CreateSurvey;
+using Survey.Microservices.Architecture.Domain.UseCases.v1.Survey.GetSurveyResults;
 using Survey.Microservices.Architecture.Infrastructure.Data.MongoDb.Repositories.v1;
 using Survey.Microservices.Architecture.Infrastructure.Service.Services.v1;
 
@@ -39,12 +41,14 @@ namespace Survey.Microservices.Architecture.Infrastructure.IoC
         private static void AddApplicationServices(IServiceCollection services)
         {
             services.AddScoped<INotificationContextService, NotificationContextService>();
+            services.AddTransient<ISurveyService, SurveyService>();
         }
 
         private static void AddApplicationUseCases(IServiceCollection services)
         {
             services.AddScoped<ICreateSurveyUseCase, CreateSurveyUseCase>();
             services.AddScoped<IAddSurveyAnswerUseCase, AddSurveyAnswerUseCase>();
+            services.AddScoped<IGetSurveyResultsUseCase, GetSurveyResultsUseCase>();
         }
 
         private static void AddAutoMapper(IServiceCollection services)
