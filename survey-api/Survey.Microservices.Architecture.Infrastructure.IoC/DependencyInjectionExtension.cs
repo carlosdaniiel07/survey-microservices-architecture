@@ -6,6 +6,7 @@ using Survey.Microservices.Architecture.Application.UseCases.v1.Auth.SignIn;
 using Survey.Microservices.Architecture.Application.UseCases.v1.Auth.SignUp;
 using Survey.Microservices.Architecture.Application.UseCases.v1.Survey.AddSurveyAnswer;
 using Survey.Microservices.Architecture.Application.UseCases.v1.Survey.CreateSurvey;
+using Survey.Microservices.Architecture.Application.UseCases.v1.Survey.GetAllSurveys;
 using Survey.Microservices.Architecture.Application.UseCases.v1.Survey.GetSurveyResults;
 using Survey.Microservices.Architecture.Domain.Interfaces.Repositories.v1;
 using Survey.Microservices.Architecture.Domain.Interfaces.Services.v1;
@@ -15,6 +16,7 @@ using Survey.Microservices.Architecture.Domain.UseCases.v1.Auth.SignIn;
 using Survey.Microservices.Architecture.Domain.UseCases.v1.Auth.SignUp;
 using Survey.Microservices.Architecture.Domain.UseCases.v1.Survey.AddSurveyAnswer;
 using Survey.Microservices.Architecture.Domain.UseCases.v1.Survey.CreateSurvey;
+using Survey.Microservices.Architecture.Domain.UseCases.v1.Survey.GetAllSurveys;
 using Survey.Microservices.Architecture.Domain.UseCases.v1.Survey.GetSurveyResults;
 using Survey.Microservices.Architecture.Infrastructure.Data.MongoDb.Repositories.v1;
 using Survey.Microservices.Architecture.Infrastructure.Service.Services.v1;
@@ -63,6 +65,7 @@ namespace Survey.Microservices.Architecture.Infrastructure.IoC
             services.AddScoped<ISignUpUseCase, SignUpUseCase>();
             services.AddScoped<ISignInUseCase, SignInUseCase>();
             services.AddScoped<IRefreshTokenUseCase, RefreshTokenUseCase>();
+            services.AddScoped<IGetAllSurveysUseCase, GetAllSurveysUseCase>();
         }
 
         private static void AddAutoMapper(IServiceCollection services)

@@ -14,6 +14,15 @@ namespace Survey.Microservices.Architecture.Infrastructure.Data.MongoDb.Reposito
 
         }
 
+        public new async Task<IEnumerable<SurveyEntity>> GetAllAsync()
+        {
+            return await _collection
+                .Find(FilterDefinition<SurveyEntity>.Empty)
+                .SortByDescending(survey => survey.CreatedAt)
+                .ToListAsync();
+
+        }
+
         public async Task<bool> AnyByQuestionAndActiveAsync(string question)
         {
             var builder = Builders<SurveyEntity>.Filter;
