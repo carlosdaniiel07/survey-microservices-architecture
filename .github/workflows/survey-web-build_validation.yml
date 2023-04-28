@@ -27,9 +27,10 @@ jobs:
       with:
         node-version: '18.16.0'
         cache: 'npm'
+        cache-dependency-path: ./survey-web
     
     - name: Install npm dependencies
-      run: npm i
+      run: npm ci
     
     - name: Build project
       run: npm run build
