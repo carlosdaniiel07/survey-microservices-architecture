@@ -69,7 +69,7 @@ export default function Home() {
                 <span>
                   {(surveys?.length ?? 0) > 0
                     ? `${surveys?.length} enquete(s) disponíveis para responder!`
-                    : "Nenhuma enquete disponível para responder :(`"}
+                    : "Nenhuma enquete disponível para responder :("}
                 </span>
               )}
             </span>
