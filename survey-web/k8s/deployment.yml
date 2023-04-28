@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: survey-web-dep
+  namespace: survey-microservices-architecture
+  labels:
+    app: survey-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: survey-web
+  template:
+    metadata:
+      labels:
+        app: survey-web
+    spec:
+      containers:
+        - name: survey-web-pod
+          image: __dockerImage__
+          env:
+            - name: NODE_ENV
+              value: "production"
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:
+            requests:
+              cpu: 10m
+              memory: 20Mi
+            limits:
+              cpu: 30m
+              memory: 40Mi
+          imagePullPolicy: Always
+      restartPolicy: Always
