@@ -2,6 +2,9 @@
   "name": "survey-web",
   "version": "1.0.0",
   "private": "false",
+  "repository": {
+    "directory": "https://github.com/carlosdaniiel07/survey-microservices-architecture"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
