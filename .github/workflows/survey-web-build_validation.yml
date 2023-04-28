@@ -1,0 +1,35 @@
+name: Build and test
+
+on:
+  push:
+    paths:
+      - survey-web/**
+    branches:
+      - 'develop'
+      - '!main'
+  pull_request:
+  workflow_call:
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./survey-web
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Use Node.js 18.16.0
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.16.0'
+        cache: 'npm'
+    
+    - name: Install npm dependencies
+      run: npm ci
+    
+    - name: Build project
+      run: npm run build
