@@ -41,5 +41,10 @@ namespace Survey.Microservices.Architecture.Infrastructure.Service.Services.v1
                 PropertyNameCaseInsensitive = true,
             });
         }
+
+        public async Task DeleteAsync(string key)
+        {
+            await _database.KeyDeleteAsync(key);
+        }
     }
 }

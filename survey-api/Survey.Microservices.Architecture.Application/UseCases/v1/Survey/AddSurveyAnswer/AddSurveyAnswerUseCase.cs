@@ -1,31 +1,26 @@
 ﻿using Microsoft.Extensions.Logging;
 using Survey.Microservices.Architecture.Domain.Entities.v1;
 using Survey.Microservices.Architecture.Domain.Exceptions;
-using Survey.Microservices.Architecture.Domain.Exceptions.v1;
 using Survey.Microservices.Architecture.Domain.Interfaces.Repositories.v1;
 using Survey.Microservices.Architecture.Domain.Interfaces.Services.v1;
 using Survey.Microservices.Architecture.Domain.UseCases.v1.Survey.AddSurveyAnswer;
-using SurveyEntity = Survey.Microservices.Architecture.Domain.Entities.v1.Survey;
 
 namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.AddSurveyAnswer
 {
     public class AddSurveyAnswerUseCase : BaseUseCase<AddSurveyAnswerUseCase>, IAddSurveyAnswerUseCase
     {
-        private readonly ISurveyRepository _surveyRepository;
+        private readonly ISurveyService _surveyService;
         private readonly IAnswerRepository _answerRepository;
-        private readonly ICacheService _cacheService;
 
         public AddSurveyAnswerUseCase(
             ILogger<AddSurveyAnswerUseCase> logger,
             INotificationContextService notificationContextService,
-            ISurveyRepository surveyRepository,
-            IAnswerRepository answerRepository,
-            ICacheService cacheService
+            ISurveyService surveyService,
+            IAnswerRepository answerRepository
         ) : base(logger, notificationContextService)
         {
-            _surveyRepository = surveyRepository;
+            _surveyService = surveyService;
             _answerRepository = answerRepository;
-            _cacheService = cacheService;
         }
 
         public async Task<AddSurveyAnswerResponse> ExecuteAsync(AddSurveyAnswerRequest request)
@@ -34,7 +29,7 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.AddSu
             {
                 _logger.LogInformation($"Adding a new answer to survey {request.SurveyId}");
 
-                var survey = await GetSurveyByIdAsync(request.SurveyId);
+                var survey = await _surveyService.GetByIdAsync(request.SurveyId);
                 var isValidAnswer = survey.AvailableAnswers.Contains(request.Value);
 
                 if (!isValidAnswer)
@@ -65,32 +60,6 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.AddSu
                 _logger.LogError(ex, $"Error while adding a new answer to survey {request.SurveyId}");
                 throw;
             }
-        }
-
-        private async Task<SurveyEntity> GetSurveyByIdAsync(Guid surveyId)
-        {
-            var cacheKey = $"surve:{surveyId}";
-            var surveyFromCache = await _cacheService.RetrieveAsync<SurveyEntity>(cacheKey);
-
-            if (surveyFromCache != null)
-            {
-                _logger.LogInformation($"Survey {surveyId} retrieved from cache");
-                return surveyFromCache;
-            }
-
-            var survey = await _surveyRepository.GetByIdAsync(surveyId);
-
-            if (survey == null)
-                throw new SurveyNotFoundException();
-
-            if (!survey.IsActive)
-                throw new SurveyNotActiveException();
-
-            await _cacheService.AddAsync(cacheKey, survey, TimeSpan.FromMinutes(3));
-
-            _logger.LogInformation($"Survey {surveyId} added to cache");
-
-            return survey;
         }
     }
 }

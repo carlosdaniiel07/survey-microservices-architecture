@@ -4,11 +4,12 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="HotChocolate.AspNetCore" Version="13.0.5" />
+		<PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="13.0.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.16" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\Survey.Microservices.Architecture.Infrastructure.IoC\Survey.Microservices.Architecture.Infrastructure.IoC.csproj" />
 	</ItemGroup>
-	<ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 </Project>

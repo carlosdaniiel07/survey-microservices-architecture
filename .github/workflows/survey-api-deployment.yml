@@ -1,6 +1,7 @@
 name: Deploy to Kubernetes cluster
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - survey-api/**
