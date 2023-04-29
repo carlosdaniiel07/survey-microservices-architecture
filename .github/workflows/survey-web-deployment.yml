@@ -1,0 +1,67 @@
+name: Deploy to Kubernetes cluster
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - survey-web/**
+    branches:
+      - "main"
+
+jobs:
+  build-and-push-docker-image:
+    name: Build and push Docker image
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./survey-web
+    env:
+      DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-web:${{ github.sha }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Docker login
+        run: docker login registry.digitalocean.com -u ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }} -p ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }}
+
+      - name: Build Docker image
+        run: docker image build -t ${{ env.DOCKER_IMAGE_NAME }} .
+
+      - name: Push Docker image
+        run: docker image push ${{ env.DOCKER_IMAGE_NAME }}
+  deploy-to-kubernetes:
+    name: Deploy to Kubernetes cluster
+    needs: build-and-push-docker-image
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./survey-web
+    env:
+      DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-web:${{ github.sha }}
+    
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: falnyr/replace-env-vars-action@master
+        name: Replace variables in K8s manifest
+        env:
+          dockerImage: ${{ env.DOCKER_IMAGE_NAME }}
+        with:
+          filename: ./survey-web/k8s/deployment.yml
+
+      - uses: falnyr/replace-env-vars-action@master
+        name: Replace variables in K8s manifest
+        env:
+          apiUrl: ${{ secrets.API_URL }}
+        with:
+          filename: ./survey-web/.env.production
+        
+      - uses: tale/kubectl-action@v1
+        name: Setup Kubernetes cluster config
+        with:
+          base64-kube-config: ${{ secrets.DIGITAL_OCEAN_KUBE_CONFIG }}
+      
+      - name: Apply deployment on Kubernetes cluster
+        run: kubectl apply -f ./k8s
