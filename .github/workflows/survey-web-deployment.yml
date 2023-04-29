@@ -22,6 +22,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: falnyr/replace-env-vars-action@master
+        name: Replace variables in .env.production file
+        env:
+          apiUrl: ${{ secrets.API_URL }}
+        with:
+          filename: ./survey-web/.env.production
+
       - name: Docker login
         run: docker login registry.digitalocean.com -u ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }} -p ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }}
 
@@ -50,13 +57,6 @@ jobs:
           dockerImage: ${{ env.DOCKER_IMAGE_NAME }}
         with:
           filename: ./survey-web/k8s/deployment.yml
-
-      - uses: falnyr/replace-env-vars-action@master
-        name: Replace variables in K8s manifest
-        env:
-          apiUrl: ${{ secrets.API_URL }}
-        with:
-          filename: ./survey-web/.env.production
         
       - uses: tale/kubectl-action@v1
         name: Setup Kubernetes cluster config
