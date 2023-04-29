@@ -23,6 +23,9 @@ export default function Home() {
       surveyService
         .findAll()
         .then(setSurveys)
+        .catch(() =>
+          toast.error("Ocorreu um erro ao carregar a listagem de enquetes")
+        )
         .finally(() => setStatus("idle"));
     };
 
