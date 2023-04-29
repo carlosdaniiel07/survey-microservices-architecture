@@ -17,7 +17,7 @@ jobs:
         shell: bash
         working-directory: ./survey-web
     env:
-      DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-web:${{ github.sha }}
+      DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-api:${{ github.sha }}
 
     steps:
       - uses: actions/checkout@v3
@@ -39,7 +39,7 @@ jobs:
         shell: bash
         working-directory: ./survey-web
     env:
-      DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-web:${{ github.sha }}
+      DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-api:${{ github.sha }}
     
     steps:
       - uses: actions/checkout@v3
