@@ -1,0 +1,33 @@
+name: Upload assets to CDN
+
+on: workflow_dispatch
+
+jobs:
+  upload-assets:
+    name: Upload assets to CDN
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./survey-web
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js 18.16.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.16.0'
+          cache: 'npm'
+          cache-dependency-path: ./survey-web
+      
+      - name: Install npm dependencies
+        run: npm ci
+      
+      - name: Build project
+        run: npm run build
+
+      - name: Upload build assets to Cloudinary CDN
+        uses: ./.github/actions/cloudinary-uploader
+        with:
+          assets-path: ./survey-web/out/_next/static
