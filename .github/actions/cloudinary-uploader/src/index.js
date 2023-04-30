@@ -49,18 +49,20 @@ const run = async () => {
   for (const file of files) {
     const fileNameSplit = String(file).split(path.sep);
     const fileName = fileNameSplit[fileNameSplit.length - 1];
-    const folderName = file
+    const folder = file
       .replace(assetsPath, "")
       .replace(fileName, "")
       .replaceAll(path.sep, "/");
+    const folderName = `_next/static/${folder}`;
 
     try {
       await cloudinary.uploader.upload(file, {
         public_id: fileName,
         resource_type: "auto",
-        folder: `_next/static/${folderName}`,
+        folder: folderName,
         overwrite: true,
       });
+      core.info(`Uploaded file ${file} to folder ${folderName}`);
     } catch (err) {
       throw new Error(
         `Error while uploading file ${fileName} to Cloudinary: ${err?.message}`
