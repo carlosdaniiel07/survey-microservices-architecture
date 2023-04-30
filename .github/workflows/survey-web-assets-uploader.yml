@@ -37,4 +37,4 @@ jobs:
           cloud-name: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
           api-key: ${{ secrets.CLOUDINARY_API_KEY }}
           api-secret: ${{ secrets.CLOUDINARY_API_SECRET }}
-          assets-path: ./survey-web/out/_next/static
+          assets-path: survey-web/out/_next/static
