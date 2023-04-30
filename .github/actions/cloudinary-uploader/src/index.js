@@ -50,7 +50,7 @@ const run = async () => {
     const fileNameSplit = String(file).split(path.sep);
     const fileName = fileNameSplit[fileNameSplit.length - 1];
     const folderName = file
-      .replace(basePath, "")
+      .replace(assetsPath, "")
       .replace(fileName, "")
       .replaceAll(path.sep, "/");
 
