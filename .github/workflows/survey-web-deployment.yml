@@ -18,7 +18,7 @@ jobs:
         working-directory: ./survey-web
     env:
       DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-api:${{ github.sha }}
-      # NODE_ENV: production
+      USE_CDN: true
 
     steps:
       - uses: actions/checkout@v3
@@ -42,6 +42,14 @@ jobs:
 
       - name: Build project
         run: npm run build
+
+      - name: Upload build assets to Cloudinary CDN
+        uses: ./.github/actions/cloudinary-uploader
+        with:
+          cloud-name: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          api-key: ${{ secrets.CLOUDINARY_API_KEY }}
+          api-secret: ${{ secrets.CLOUDINARY_API_SECRET }}
+          assets-path: survey-web/out/_next/static
 
       - name: Docker login
         run: docker login registry.digitalocean.com -u ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }} -p ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }}
