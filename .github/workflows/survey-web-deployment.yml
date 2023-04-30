@@ -18,9 +18,20 @@ jobs:
         working-directory: ./survey-web
     env:
       DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-api:${{ github.sha }}
+      NODE_ENV: production
 
     steps:
       - uses: actions/checkout@v3
+
+      - name: Use Node.js 18.16.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18.16.0"
+          cache: "npm"
+          cache-dependency-path: ./survey-web
+
+      - name: Install npm dependencies
+        run: npm ci
 
       - uses: falnyr/replace-env-vars-action@master
         name: Replace variables in .env.production file
@@ -29,11 +40,14 @@ jobs:
         with:
           filename: ./survey-web/.env.production
 
+      - name: Build project
+        run: npm run build
+
       - name: Docker login
         run: docker login registry.digitalocean.com -u ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }} -p ${{ secrets.DIGITAL_OCEAN_REGISTRY_CREDENTIALS }}
 
       - name: Build Docker image
-        run: docker image build -t ${{ env.DOCKER_IMAGE_NAME }} .
+        run: docker image build -t ${{ env.DOCKER_IMAGE_NAME }} -f Dockerfile.prod .
 
       - name: Push Docker image
         run: docker image push ${{ env.DOCKER_IMAGE_NAME }}
@@ -47,7 +61,7 @@ jobs:
         working-directory: ./survey-web
     env:
       DOCKER_IMAGE_NAME: registry.digitalocean.com/survey-microservices-architecture/survey-api:${{ github.sha }}
-    
+
     steps:
       - uses: actions/checkout@v3
 
@@ -57,11 +71,11 @@ jobs:
           dockerImage: ${{ env.DOCKER_IMAGE_NAME }}
         with:
           filename: ./survey-web/k8s/deployment.yml
-        
+
       - uses: tale/kubectl-action@v1
         name: Setup Kubernetes cluster config
         with:
           base64-kube-config: ${{ secrets.DIGITAL_OCEAN_KUBE_CONFIG }}
-      
+
       - name: Apply deployment on Kubernetes cluster
         run: kubectl apply -f ./k8s

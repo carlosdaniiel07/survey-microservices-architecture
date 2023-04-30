@@ -1,0 +1,19 @@
+name: 'Cloudinary Uploader'
+description: 'Upload project assets tp Cloudinary CDN'
+author: Carlos Daniel
+inputs:
+  cloud-name:
+    description: 'The Cloudinary cloud name'
+    required: true
+  api-key:
+    description: 'The Cloudinary API key'
+    required: true
+  api-secret:
+    description: 'The Cloudinary API secret'
+    required: true
+  assets-path:
+    description: 'Path with assets to upload'
+    required: true
+runs:
+  using: 'node16'
+  main: 'src/index.js'
