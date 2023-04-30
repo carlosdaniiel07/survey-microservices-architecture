@@ -1,6 +1,10 @@
 name: Upload assets to CDN
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "feature/custom-github-action"
 
 jobs:
   upload-assets:
@@ -17,13 +21,13 @@ jobs:
       - name: Use Node.js 18.16.0
         uses: actions/setup-node@v3
         with:
-          node-version: '18.16.0'
-          cache: 'npm'
+          node-version: "18.16.0"
+          cache: "npm"
           cache-dependency-path: ./survey-web
-      
+
       - name: Install npm dependencies
         run: npm ci
-      
+
       - name: Build project
         run: npm run build
 
