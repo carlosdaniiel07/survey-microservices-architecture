@@ -27,7 +27,7 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.AddSu
         {
             try
             {
-                _logger.LogInformation($"Adding a new answer to survey {request.SurveyId}");
+                _logger.LogInformation("Adding a new answer to survey {surveyId}", request.SurveyId);
 
                 var survey = await _surveyService.GetByIdAsync(request.SurveyId);
                 var isValidAnswer = survey.AvailableAnswers.Contains(request.Value);
@@ -51,13 +51,13 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.AddSu
             }
             catch (BaseException ex)
             {
-                _logger.LogError(ex, $"Error while adding a new answer to survey {request.SurveyId}");
+                _logger.LogError(ex, "Error while adding a new answer to survey {surveyId}", request.SurveyId);
                 AddNotification(ex.Message);
                 return default;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error while adding a new answer to survey {request.SurveyId}");
+                _logger.LogError(ex, "Error while adding a new answer to survey {surveyId}", request.SurveyId);
                 throw;
             }
         }
