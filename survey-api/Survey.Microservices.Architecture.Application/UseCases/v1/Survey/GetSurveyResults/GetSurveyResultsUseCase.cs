@@ -28,7 +28,7 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.GetSu
         {
             try
             {
-                _logger.LogInformation($"Retrieving results from survey {request.SurveyId}");
+                _logger.LogInformation("Retrieving results from survey {surveyId}", request.SurveyId);
 
                 var survey = await _surveyService.GetByIdAsync(request.SurveyId);
                 var results = await GetResultsAsync(request.SurveyId);
@@ -46,7 +46,7 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.GetSu
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error while retrieving results from survey {request.SurveyId}");
+                _logger.LogError(ex, "Error while retrieving results from survey {surveyId}", request.SurveyId);
                 throw;
             }
         }
@@ -58,7 +58,7 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.GetSu
 
             if (resultsFromCache != null)
             {
-                _logger.LogInformation($"Retrieved survey {surveyId} results from cache");
+                _logger.LogInformation("Retrieved survey {surveyId} results from cache", surveyId);
                 return resultsFromCache;
             }
 
@@ -81,7 +81,7 @@ namespace Survey.Microservices.Architecture.Application.UseCases.v1.Survey.GetSu
 
             await _cacheService.AddAsync(cacheKey, results, TimeSpan.FromMinutes(3));
 
-            _logger.LogInformation($"Survey {surveyId} results added to cache");
+            _logger.LogInformation("Survey {surveyId} results added to cache", surveyId);
 
             return results;
         }
