@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.ApplicationInsights;
 using Survey.Microservices.Architecture.Application.Services.v1;
 using Survey.Microservices.Architecture.Application.UseCases.v1.Auth.RefreshToken;
 using Survey.Microservices.Architecture.Application.UseCases.v1.Auth.SignIn;
@@ -27,12 +29,29 @@ namespace Survey.Microservices.Architecture.Infrastructure.IoC
     {
         public static void ConfigureBaseServices(this IServiceCollection services, IConfiguration configuration)
         {
+            AddApplicationInsights(services, configuration);
             AddDataServices(services);
             AddInfrastructureServices(services);
             AddApplicationServices(services);
             AddApplicationUseCases(services);
             AddAutoMapper(services);
             AddConfigurationModels(services, configuration);
+        }
+
+        private static void AddApplicationInsights(IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddApplicationInsightsTelemetry(options =>
+            {
+                options.ConnectionString = configuration.GetConnectionString("ApplicationInsights");
+            });
+            services.AddLogging(options =>
+            {
+                options.AddApplicationInsights();
+                options.AddFilter<ApplicationInsightsLoggerProvider>((category, logLevel) =>
+                {
+                    return category.Contains("Survey.Microservices.Architecture") && logLevel == LogLevel.Information;
+                });
+            });
         }
 
         private static void AddDataServices(IServiceCollection services)
