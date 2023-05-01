@@ -21,7 +21,7 @@ export default function Home() {
     const loadAllSurveys = () => {
       setStatus("loading");
       surveyService
-        .findAll()
+        .findAllGraphQL()
         .then(setSurveys)
         .catch(() =>
           toast.error("Ocorreu um erro ao carregar a listagem de enquetes")
@@ -41,7 +41,7 @@ export default function Home() {
     (answer: string) => {
       setStatus("submitting");
       surveyService
-        .saveAnswer(survey?.id as string, {
+        .saveAnswerGraphQL(survey?.id as string, {
           value: answer,
         })
         .then(() => {
