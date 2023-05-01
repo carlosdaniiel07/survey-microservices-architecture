@@ -50,6 +50,7 @@ jobs:
           dockerImage: ${{ env.DOCKER_IMAGE_NAME }}
           mongoDbConnectionString: ${{ secrets.MONGODB_CONNECTION_STRING }}
           redisConnectionString: redis-svc:6379
+          applicationInsightsConnectionString: ${{ secrets.APPLICATION_INSIGHTS_CONNECTION_STRING }}
         with:
           filename: ./survey-api/k8s/deployment.yml
         

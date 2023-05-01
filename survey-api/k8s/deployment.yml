@@ -27,6 +27,8 @@ spec:
               value: "__mongoDbConnectionString__"
             - name: ConnectionStrings__Redis
               value: "__redisConnectionString__"
+            - name: ConnectionStrings__ApplicationInsights
+              value: "__applicationInsightsConnectionString__"
           ports:
             - name: http
               containerPort: 80
